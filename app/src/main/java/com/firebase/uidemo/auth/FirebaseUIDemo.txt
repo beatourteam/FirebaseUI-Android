@@ -1,0 +1,62 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @trytobeatme
+ Sign out
+ Watch 232
+  Star 2,079
+ Fork 811 firebase/FirebaseUI-Android
+ Code  Issues 44  Pull requests 4  Projects 4  Wiki Insights 
+Branch: master Find file Copy pathFirebaseUI-Android/app/src/main/java/com/firebase/uidemo/auth/FirebaseUIDemo.java
+9bbcf8d  on Jun 16
+@SUPERCILEX SUPERCILEX Add support for night mode (#749)
+1 contributor
+RawBlameHistory     
+32 lines (25 sloc)  915 Bytes
+package com.firebase.uidemo.auth;
+
+import android.app.Application;
+import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
+
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
+
+public class FirebaseUIDemo extends Application {
+    private RefWatcher mRefWatcher;
+
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        return ((FirebaseUIDemo) context.getApplicationContext()).mRefWatcher;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        mRefWatcher = LeakCanary.install(this);
+    }
+}
+© 2017 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
